@@ -39,15 +39,15 @@ docker build -t rate-limiter .
 
 ### 5️⃣ Run the Docker Container  
 ```sh
-docker run -p 3000:3000 rate-limiter
+docker run -p 4000:3000 rate-limiter
 ```
 
 ### 6️⃣ Test the Rate Limiter  
 ```sh
-curl http://localhost:3000
-curl http://localhost:3000
-curl http://localhost:3000
-curl http://localhost:3000  # This should return a "Too many requests" error
+curl http://localhost:4000
+curl http://localhost:4000
+curl http://localhost:4000
+curl http://localhost:4000  # This should return a "Too many requests" error
 ```
 
 ### 7️⃣ Stop the Running Container  
@@ -107,6 +107,3 @@ module.exports = rateLimiter;
 
 This ensures fair usage and prevents abuse of the API.
 
----
-
-Now your **README.md** fully explains how the rate limiter works! Let me know if you need more edits. 🚀
