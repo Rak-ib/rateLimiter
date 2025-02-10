@@ -18,7 +18,7 @@ This project implements a **Rate Limiter Middleware** using a **Sliding Window A
 
 ### 1️⃣ Clone the Repository  
 ```sh
-git clone <repo_url>
+git clone git@github.com:Rak-ib/rateLimiter.git
 cd rate-limiter
 ```
 
@@ -54,13 +54,6 @@ curl http://localhost:3000  # This should return a "Too many requests" error
 ```sh
 docker ps
 docker stop <container_id>
-```
-
-### 8️⃣ Push Changes to GitHub  
-```sh
-git add .
-git commit -m "Added rate limiter middleware"
-git push origin main
 ```
 
 ---
