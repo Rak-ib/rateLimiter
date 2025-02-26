@@ -1,78 +1,54 @@
 
-# Rate Limiter Middleware in Node.js
+# 🚀 Rate Limiter (Sliding Window Algorithm)
 
-## 📌 Overview  
-This project implements a **Rate Limiter Middleware** using a **Sliding Window Algorithm** to limit client requests in a Node.js application.  
+## 📖 Introduction
+A **Rate Limiter** is a mechanism used to **control the number of requests** a client can make to a server **within a specified time period**. This helps prevent **abuse, brute-force attacks, and excessive server load**.
 
-## 🚀 How It Works  
-- Allows **3 requests per 10 seconds** per IP.  
-- Uses an **in-memory store** to track timestamps.  
-- Denies requests exceeding the limit with `429 Too Many Requests`.  
+For example, if an API allows **100 requests per minute**, and a client sends 101 requests, the last request will be **denied** until the next time window starts.
 
-## 🛠 Tech Stack  
-- Node.js  
-- Express.js  
-- Docker  
+![Rate Limiter Flow](images/rate_limiter_flow.png)
 
-## 🔧 Setup Instructions  
+## 🔍 What is a Sliding Window Algorithm?
+The **Sliding Window Algorithm** is a technique used for rate limiting that allows more flexibility than **fixed window** methods.
 
-### 1️⃣ Clone the Repository  
+### 📝 Example:
+Imagine you have an **API limit of 5 requests per 10 seconds**.
+
+1. A user sends **3 requests at 00:00** → ✅ **All Allowed**.
+2. The user tries another request at **00:02** → ❌ **Denied** (Limit reached).
+3. At **00:10**, the first request from 00:00 is removed from the count.
+4. The user can now send **1 more request** before hitting the limit again.
+
+This method ensures **continuous request handling** instead of resetting limits at fixed intervals.
+
+## ⚙️ Features of this Rate Limiter
+- Uses the **Sliding Window Algorithm** for flexible rate limiting.
+- Prevents **abuse** and **DDoS attacks**.
+- Can be **customized** for different APIs.
+
+## 🏗️ Tech Stack
+- **Node.js**
+- **Express.js**
+
+
+## 🚀 Want to do by yourself!
+
+![create a directory](images/1.png)
+![Initializing the project](images/2.png)
+![Installing the express](images/3.png)
+
+### 1️⃣ Create `rateLimiter.js`
 ```sh
-git clone git@github.com:Rak-ib/rateLimiter.git
-cd rate-limiter
+# Create the file
+nano rateLimiter.js
 ```
 
-### 2️⃣ Install Dependencies  
-```sh
-npm install
-```
+📌 Paste the following code:
 
-### 3️⃣ Run the Server Locally  
-```sh
-node server.js
-```
-
-### 4️⃣ Build the Docker Image  
-```sh
-docker build -t rate-limiter .
-```
-
-### 5️⃣ Run the Docker Container  
-```sh
-docker run -p 4000:3000 rate-limiter
-```
-
-### 6️⃣ Test the Rate Limiter  
-```sh
-curl http://localhost:4000
-curl http://localhost:4000
-curl http://localhost:4000
-curl http://localhost:4000  # This should return a "Too many requests" error
-```
-
-### 7️⃣ Stop the Running Container  
-```sh
-docker ps
-docker stop <container_id>
-```
-
----
-
-## 📜 Understanding `rateLimiter.js`  
-
-The `rateLimiter.js` file contains the middleware logic for limiting requests using a **Sliding Window Algorithm**.
-
-### 📌 How It Works:
-1. It stores request timestamps **per IP** in memory.
-2. Requests older than the **10-second window** are removed.
-3. If a client exceeds **3 requests within 10 seconds**, they get a `429 Too Many Requests` response.
-4. Otherwise, the request is allowed to proceed.
-
-### 📝 Code Explanation:
 ```js
-const rateLimit = {};  // Stores request timestamps per IP
+const rateLimit = {};
 const WINDOW_SIZE_IN_MS = 10000; // 10 seconds
-const MAX_REQUESTS = 3;  // Maximum allowed requests per window
+const MAX_REQUESTS = 3;
 
 const rateLimiter = (req, res, next) => {
     const clientIp = req.ip;
@@ -95,6 +71,85 @@ const rateLimiter = (req, res, next) => {
 
 module.exports = rateLimiter;
 ```
+
+✅ Save and exit:
+- Press `CTRL + X`, then `Y`, then `ENTER`.
+
+### 2️⃣ Create `server.js`
+```sh
+# Create the file
+nano server.js
+```
+
+📌 Paste the following code:
+
+```js
+const express = require("express");
+const rateLimiter = require("./rateLimiter");
+
+const app = express();
+app.use(rateLimiter);
+
+app.get("/", (req, res) => {
+    res.send("Hello, this is a rate-limited API!");
+});
+
+app.listen(3000, () => console.log("Server running on port 3000"));
+```
+
+✅ Save and exit:
+- Press `CTRL + X`, then `Y`, then `ENTER`.
+
+---
+
+## 🚀 Step 4: Dockerize the Application
+
+### 1️⃣ Create `Dockerfile`
+```sh
+# Create the file
+nano Dockerfile
+```
+
+📌 Paste the following code:
+
+```dockerfile
+# Use official Node.js image
+FROM node:18
+
+# Set working directory
+WORKDIR /app
+
+# Copy package.json and install dependencies
+COPY package.json package-lock.json ./
+RUN npm install
+
+# Copy source code
+COPY . .
+
+# Expose port
+EXPOSE 3000
+
+# Start the server
+CMD ["node", "server.js"]
+```
+
+✅ Save and exit:
+- Press `CTRL + X`, then `Y`, then `ENTER`.
+
+![Rate Limiter Flow](images/4.png)
+![Rate Limiter Flow](images/5.png)
+
+Using the following command we can test the server. Here the server can handel 3 request in a 10s time period
+```sh
+# Create the file
+curl http://localhost:3000
+```
+![Rate Limiter Flow](images/6.png)
+
+Here we can see that for the first three request the output is Hello, this is a rate-limited API! but for the 4th request we can see
+ the error message 
+
+
 
 ### ✅ Example Scenario:
 | Request | Time | Allowed? |
