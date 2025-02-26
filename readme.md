@@ -6,7 +6,7 @@ A **Rate Limiter** is a mechanism used to **control the number of requests** a c
 
 For example, if an API allows **100 requests per minute**, and a client sends 101 requests, the last request will be **denied** until the next time window starts.
 
-<img src="images/rate_limiter_flow.png" width="250" />
+<img src="images/rate_limiter_flow.png" width="500" />
 
 
 ## 🔍 What is a Sliding Window Algorithm?
@@ -72,9 +72,9 @@ This method ensures **continuous request handling** instead of resetting limits 
 
 ## 🚀 Want to do by yourself!
 
-![create a directory](images/1.png=250px)
-![Initializing the project](images/2.png=250px)
-![Installing the express](images/3.png=250px)
+<img src="images/1.png" width="500" />
+<img src="images/2.png" width="500" />
+<img src="images/3.png" width="500" />
 
 ### 1️⃣ Create `rateLimiter.js`
 ```sh
@@ -175,15 +175,15 @@ CMD ["node", "server.js"]
 ✅ Save and exit:
 - Press `CTRL + X`, then `Y`, then `ENTER`.
 
-![Rate Limiter Flow](images/4.png=250px)
-![Rate Limiter Flow](images/5.png=250px)
+<img src="images/4.png" width="500" />
+<img src="images/5.png" width="500" />
 
 Using the following command we can test the server. Here the server can handel 3 request in a 10s time period
 ```sh
 # Create the file
 curl http://localhost:3000
 ```
-![Rate Limiter Flow](images/6.png=250px)
+<img src="images/6.png" width="500" />
 
 Here we can see that for the first three request the output is Hello, this is a rate-limited API! but for the 4th request we can see
  the error message 
