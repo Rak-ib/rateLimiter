@@ -71,12 +71,17 @@ This method ensures **continuous request handling** instead of resetting limits 
 
 
 ## 🚀 Want to do by yourself!
-
+## 🚀 Step 1: Create a directory
 <img src="images/1.png" width="500" />
+
+
+## 🚀 Step 2: Initialize the project
 <img src="images/2.png" width="500" />
+
+## 🚀 Step 3: Install Express
 <img src="images/3.png" width="500" />
 
-### 1️⃣ Create `rateLimiter.js`
+## 🚀 Step 4: Crate a file for rate limiter
 ```sh
 # Create the file
 nano rateLimiter.js
@@ -114,7 +119,7 @@ module.exports = rateLimiter;
 ✅ Save and exit:
 - Press `CTRL + X`, then `Y`, then `ENTER`.
 
-### 2️⃣ Create `server.js`
+## 🚀 Step 5: Create server.js file
 ```sh
 # Create the file
 nano server.js
@@ -141,7 +146,7 @@ app.listen(3000, () => console.log("Server running on port 3000"));
 
 ---
 
-## 🚀 Step 4: Dockerize the Application
+## 🚀 Step 6: Dockerize the Application
 
 ### 1️⃣ Create `Dockerfile`
 ```sh
@@ -175,8 +180,14 @@ CMD ["node", "server.js"]
 ✅ Save and exit:
 - Press `CTRL + X`, then `Y`, then `ENTER`.
 
+## 🚀 Step 7:  Create an image
 <img src="images/4.png" width="500" />
+
+## 🚀 Step 8: Run the container
 <img src="images/5.png" width="500" />
+
+
+## 🚀 Step 9: Now check in a new terminal
 
 Using the following command we can test the server. Here the server can handel 3 request in a 10s time period
 ```sh
