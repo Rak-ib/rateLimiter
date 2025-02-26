@@ -6,7 +6,7 @@ A **Rate Limiter** is a mechanism used to **control the number of requests** a c
 
 For example, if an API allows **100 requests per minute**, and a client sends 101 requests, the last request will be **denied** until the next time window starts.
 
-<img src="images/your_image.png" width="250" />
+<img src="images/rate_limiter_flow.png" width="250" />
 
 
 ## 🔍 What is a Sliding Window Algorithm?
